@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>국제기구 채용 브리핑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FBFCFD;
+  --ink: #0B2E4F;
+  --ink-soft: #5A6B7C;
+  --un-blue: #009EDB;
+  --un-blue-deep: #0077A8;
+  --line: #DDE4EA;
+  --urgent: #C8401E;
+  --closed: #9AA6B1;
+  --new-bg: #E5F6FD;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.mono { font-family: "IBM Plex Mono", "SF Mono", monospace; }
+
+.wrap { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* 마스트헤드 */
+header { border-bottom: 3px solid var(--ink); padding-bottom: 18px; margin-bottom: 8px; }
+.masthead-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 12px; letter-spacing: .08em; color: var(--ink-soft);
+  text-transform: uppercase; margin-bottom: 10px;
+}
+h1 { font-size: 30px; font-weight: 700; letter-spacing: -.01em; }
+h1 .dot { color: var(--un-blue); }
+.summary {
+  display: flex; gap: 20px; padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px; color: var(--ink-soft);
+}
+.summary strong { color: var(--ink); font-weight: 600; }
+.summary .new-count strong { color: var(--un-blue-deep); }
+.summary .urgent-count strong { color: var(--urgent); }
+
+/* 필터 */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  padding: 18px 0 14px;
+  position: sticky; top: 0; background: var(--paper); z-index: 2;
+}
+.tab {
+  border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  padding: 6px 14px; border-radius: 999px; font-size: 13px; font-family: inherit;
+  cursor: pointer; transition: border-color .15s, color .15s;
+}
+.tab:hover { border-color: var(--un-blue); color: var(--un-blue-deep); }
+.tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.tab .cnt { font-size: 11px; opacity: .65; margin-left: 4px; }
+#search {
+  margin-left: auto; border: 1px solid var(--line); border-radius: 6px;
+  padding: 7px 12px; font-size: 13px; font-family: inherit; width: 200px;
+  background: #fff; color: var(--ink);
+}
+#search:focus { outline: 2px solid var(--un-blue); outline-offset: 1px; border-color: transparent; }
+.tab:focus-visible { outline: 2px solid var(--un-blue); outline-offset: 2px; }
+
+/* 목록 */
+.section-label {
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-soft); padding: 20px 0 8px; border-bottom: 1px solid var(--ink);
+  display: flex; justify-content: space-between;
+}
+ul { list-style: none; }
+.row {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 14px 8px; border-bottom: 1px solid var(--line);
+}
+.row.is-new { background: var(--new-bg); }
+.row-main { flex: 1; min-width: 0; }
+.row-title { font-weight: 500; text-decoration: none; color: var(--ink); }
+.row-title:hover { color: var(--un-blue-deep); text-decoration: underline; }
+.badge-new {
+  display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  color: #fff; background: var(--un-blue); border-radius: 3px;
+  padding: 1px 6px 2px; margin-right: 8px; vertical-align: 2px;
+}
+.row-meta { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+.row-meta .sep { margin: 0 6px; color: var(--line); }
+
+/* D-day 스탬프 */
+.stamp {
+  flex-shrink: 0; text-align: right; min-width: 92px;
+  font-size: 12px; color: var(--ink-soft);
+}
+.stamp .dday {
+  display: inline-block; font-size: 13px; font-weight: 600;
+  border: 1.5px solid currentColor; border-radius: 4px;
+  padding: 2px 8px; margin-bottom: 3px;
+  color: var(--un-blue-deep);
+}
+.stamp .dday.urgent { color: var(--urgent); }
+.stamp .dday.closed { color: var(--closed); border-style: dashed; }
+.stamp .date { display: block; }
+
+.empty { padding: 48px 0; text-align: center; color: var(--ink-soft); font-size: 14px; }
+.error-banner {
+  background: #FDF0EC; border: 1px solid var(--urgent); color: var(--urgent);
+  border-radius: 6px; padding: 10px 14px; font-size: 13px; margin-top: 16px;
+}
+footer { margin-top: 40px; font-size: 12px; color: var(--ink-soft); }
+footer a { color: var(--un-blue-deep); }
+
+@media (max-width: 560px) {
+  .wrap { padding: 24px 14px 60px; }
+  h1 { font-size: 24px; }
+  #search { width: 100%; margin-left: 0; }
+  .stamp { min-width: 74px; }
+  .summary { gap: 12px; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="masthead-top mono">
+      <span>UN Recruitment Daily Brief</span>
+      <span id="updated"></span>
+    </div>
+    <h1>국제기구 채용 브리핑<span class="dot">.</span></h1>
+  </header>
+
+  <div class="summary" id="summary"></div>
+  <div id="errors"></div>
+
+  <div class="controls" id="tabs">
+    <input id="search" type="search" placeholder="제목·기구 검색" aria-label="공고 검색">
+  </div>
+
+  <main id="list"></main>
+
+  <footer>
+    출처: <a href="https://unrecruit.mofa.go.kr/new/" target="_blank" rel="noopener">외교부 국제기구인사센터</a>
+    · 이 페이지는 매일 자동 수집된 공고를 표시합니다. 최근 7일 내 처음 발견된 공고에 NEW가 표시됩니다.
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const data = window.JOB_DATA || { items: [], updated: "-", errors: [] };
+const BOARD_ORDER = ["vacancy", "internship", "unv_specialist", "unv_youth"];
+const BOARD_LABELS = {
+  vacancy: "국제기구 공석", internship: "인턴십",
+  unv_specialist: "UNV 전문봉사단", unv_youth: "UNV 청년봉사단",
+};
+let activeTab = "all";
+let query = "";
+
+document.getElementById("updated").textContent = "수집: " + data.updated;
+
+function dday(deadline) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(deadline || "")) return null;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const d = new Date(deadline + "T00:00:00");
+  return Math.round((d - today) / 86400000);
+}
+
+function ddayHtml(item) {
+  const dl = item.deadline || "";
+  const n = dday(dl);
+  if (n === null) {
+    return item.date ? `<span class="date mono">게시 ${item.date}</span>` : "";
+  }
+  let cls = "", label = "D-" + n;
+  if (n < 0 || item.status === "마감") { cls = "closed"; label = "마감"; }
+  else if (n === 0) { cls = "urgent"; label = "D-DAY"; }
+  else if (n <= 7) { cls = "urgent"; }
+  return `<span class="dday mono ${cls}">${label}</span><span class="date mono">${dl}</span>`;
+}
+
+function metaHtml(it) {
+  const parts = [];
+  if (it.org) parts.push(it.org);
+  if (it.grade) parts.push(it.grade);
+  if (it.field) parts.push(it.field);
+  return parts.join('<span class="sep">·</span>');
+}
+
+function matches(it) {
+  if (activeTab !== "all" && it.board !== activeTab) return false;
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return (it.title + " " + (it.org || "")).toLowerCase().includes(q);
+}
+
+function sortItems(items) {
+  return items.slice().sort((a, b) => {
+    if (a.is_new !== b.is_new) return a.is_new ? -1 : 1;
+    const da = dday(a.deadline), db = dday(b.deadline);
+    const oa = (da === null || da < 0) ? 9999 : da;
+    const ob = (db === null || db < 0) ? 9999 : db;
+    if (oa !== ob) return oa - ob;
+    return (b.date || b.first_seen || "").localeCompare(a.date || a.first_seen || "");
+  });
+}
+
+function rowHtml(it) {
+  return `<li class="row${it.is_new ? " is-new" : ""}">
+    <div class="row-main">
+      ${it.is_new ? '<span class="badge-new">NEW</span>' : ""}<a class="row-title" href="${it.url}" target="_blank" rel="noopener">${it.title}</a>
+      <div class="row-meta">${metaHtml(it)}</div>
+    </div>
+    <div class="stamp">${ddayHtml(it)}</div>
+  </li>`;
+}
+
+function render() {
+  const list = document.getElementById("list");
+  const filtered = data.items.filter(matches);
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty">표시할 공고가 없습니다.${query ? " 검색어를 바꿔보세요." : ""}</div>`;
+    return;
+  }
+  const boards = activeTab === "all" ? BOARD_ORDER : [activeTab];
+  list.innerHTML = boards.map(b => {
+    const items = sortItems(filtered.filter(it => it.board === b));
+    if (!items.length) return "";
+    return `<div class="section-label"><span>${BOARD_LABELS[b]}</span><span class="mono">${items.length}건</span></div>
+      <ul>${items.map(rowHtml).join("")}</ul>`;
+  }).join("");
+}
+
+function renderSummary() {
+  const total = data.items.length;
+  const newCount = data.items.filter(i => i.is_new).length;
+  const urgent = data.items.filter(i => { const n = dday(i.deadline); return n !== null && n >= 0 && n <= 7 && i.status !== "마감"; }).length;
+  document.getElementById("summary").innerHTML =
+    `<span>전체 <strong>${total}건</strong></span>
+     <span class="new-count">NEW <strong>${newCount}건</strong></span>
+     <span class="urgent-count">마감 7일 이내 <strong>${urgent}건</strong></span>`;
+  if (data.errors && data.errors.length) {
+    document.getElementById("errors").innerHTML =
+      `<div class="error-banner">일부 게시판을 불러오지 못했습니다: ${data.errors.join(", ")}</div>`;
+  }
+}
+
+function renderTabs() {
+  const tabsEl = document.getElementById("tabs");
+  const counts = { all: data.items.length };
+  BOARD_ORDER.forEach(b => counts[b] = data.items.filter(i => i.board === b).length);
+  const frag = document.createDocumentFragment();
+  [["all", "전체"], ...BOARD_ORDER.map(b => [b, BOARD_LABELS[b]])].forEach(([id, label]) => {
+    const btn = document.createElement("button");
+    btn.className = "tab" + (id === activeTab ? " active" : "");
+    btn.innerHTML = `${label}<span class="cnt mono">${counts[id]}</span>`;
+    btn.addEventListener("click", () => {
+      activeTab = id;
+      tabsEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+      render();
+    });
+    frag.appendChild(btn);
+  });
+  tabsEl.insertBefore(frag, document.getElementById("search"));
+}
+
+document.getElementById("search").addEventListener("input", e => {
+  query = e.target.value.trim();
+  render();
+});
+
+renderSummary();
+renderTabs();
+render();
+</script>
+</body>
+</html>
