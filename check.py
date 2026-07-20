@@ -46,8 +46,14 @@ BOARDS = {
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", errors="replace")
+    last_err = None
+    for _ in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return r.read().decode("utf-8", errors="replace")
+        except Exception as e:
+            last_err = e
+    raise last_err
 
 
 def strip_tags(s):

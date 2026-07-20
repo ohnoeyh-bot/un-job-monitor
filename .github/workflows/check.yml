@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  TZ: Asia/Seoul
+
 jobs:
   check:
     runs-on: ubuntu-latest
