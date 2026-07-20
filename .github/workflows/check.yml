@@ -1,8 +1,8 @@
 name: daily-check
 
+# 외교부 사이트가 해외 IP(GitHub 러너)를 차단해 클라우드 수집은 불가.
+# 수집·푸시는 로컬 맥의 launchd(run_and_push.sh)가 담당하고, 이 워크플로는 수동 테스트용.
 on:
-  schedule:
-    - cron: "0 0 * * *"   # 매일 00:00 UTC = 09:00 KST
   workflow_dispatch:
 
 permissions:
