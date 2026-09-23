@@ -105,10 +105,19 @@ def parse_notice(page):
     return items
 
 
+PAGE_URL = "https://ohnoeyh-bot.github.io/un-job-monitor/"
+
+
 def notify(title, message):
-    script = f'display notification "{message}" with title "{title}"'
+    # 버튼 달린 창을 띄우고 "공고 보기"를 누르면 공고 페이지를 연다.
+    # 창이 떠 있는 동안에도 수집·푸시는 계속 진행되도록 별도 프로세스로 띄운다.
+    script = (
+        f'set r to display dialog "{message}" with title "{title}" '
+        f'buttons {{"나중에", "공고 보기"}} default button "공고 보기" giving up after 43200\n'
+        f'if button returned of r is "공고 보기" then open location "{PAGE_URL}"'
+    )
     try:
-        subprocess.run(["osascript", "-e", script], check=False, timeout=10)
+        subprocess.Popen(["osascript", "-e", script], start_new_session=True)
     except Exception:
         pass
 
