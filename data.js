@@ -1,5 +1,5 @@
 window.JOB_DATA = {
- "updated": "2026-11-01 03:36",
+ "updated": "2026-11-01 09:10",
  "items": [],
  "errors": [
   "국제기구 공석: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
